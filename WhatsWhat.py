@@ -1,25 +1,32 @@
 # -*- coding: utf-8 -*-
-print """                                                                                                            
-                                                                                                            
-           .---.  ,---,                   ___                        .---.  ,---,                   ___     
-          /. ./|,--.' |                 ,--.'|_                     /. ./|,--.' |                 ,--.'|_   
-      .--'.  ' ;|  |  :                 |  | :,'                .--'.  ' ;|  |  :                 |  | :,'  
-     /__./ \ : |:  :  :                 :  : ' :  .--.--.      /__./ \ : |:  :  :                 :  : ' :  
- .--'.  '   \' .:  |  |,--.  ,--.--.  .;__,'  /  /  /    ' .--'.  '   \' .:  |  |,--.  ,--.--.  .;__,'  /   
-/___/ \ |    ' '|  :  '   | /       \ |  |   |  |  :  /`.//___/ \ |    ' '|  :  '   | /       \ |  |   |    
-;   \  \;      :|  |   /' :.--.  .-. |:__,'| :  |  :  ;_  ;   \  \;      :|  |   /' :.--.  .-. |:__,'| :    
- \   ;  `      |'  :  | | | \__\/: . .  '  : |__ \  \    `.\   ;  `      |'  :  | | | \__\/: . .  '  : |__  
-  .   \    .\  ;|  |  ' | : ," .--.; |  |  | '.'| `----.   \.   \    .\  ;|  |  ' | : ," .--.; |  |  | '.'| 
-   \   \   ' \ ||  :  :_:,'/  /  ,.  |  ;  :    ;/  /`--'  / \   \   ' \ ||  :  :_:,'/  /  ,.  |  ;  :    ; 
-    :   '  |--" |  | ,'   ;  :   .'   \ |  ,   /'--'.     /   :   '  |--" |  | ,'   ;  :   .'   \ |  ,   /  
-     \   \ ;    `--''     |  ,     .-./  ---`-'   `--'---'     \   \ ;    `--''     |  ,     .-./  ---`-'   
-      '---"                `--`---'                             '---"                `--`---'               
-                                                                                                            """
-print "What do you want to do?"
 
-print "[1] Create a new Whatsapp Account"
-print "[2] Login to your Whatsapp Account"
-print "[]  Run your Whatsapp Service/Application"
-print ""
-print "Your option:_"
+from wwcore import gen
+from wwcore.menu import menuItem, menuHead
+from wwcore.lang.en import cmd
 
+gen.cls()
+
+
+config = gen.loadConfig()
+
+if config["aut_valid"]:
+    menu = "logged_in"
+else:
+    menu = "not_logged_in"
+    
+
+while True:
+    gen.cls()
+    print gen.title
+    print menuHead(menu)
+    for i in range(len(menuItem(menu))):
+        print "[" + str(i+1) + "] " + menuItem(menu)[i][0]
+    choice = raw_input(cmd["your_choice"])
+    if choice.isdigit():
+        choice = int(choice)-1
+        if choice in range(len(menuItem(menu))):
+            if menuItem(menu)[choice][1] == None:
+                menuItem(menu)[choice][2]()
+            else:
+                menu = menuItem(menu)[choice][1]
+    
