@@ -5,6 +5,7 @@ The simple WhatsApp API for creating automated bots and applications.
 # Requirements
 Requirements for running this application
 - Python 2.7
+- Json
 
 # Installation
 Instruction on how to install
